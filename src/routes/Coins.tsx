@@ -35,7 +35,13 @@ export default function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={`/${coin.id}`}>
+                <IMG
+                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt={coin.symbol}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinList>
@@ -65,9 +71,10 @@ const Coin = styled.li`
   background-color: white;
   color: ${(props) => props.theme.bgColor};
   a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 20px;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.2s ease-in-out;
   }
   &:hover {
     a {
@@ -84,4 +91,10 @@ const Title = styled.h1`
 const Loader = styled.span`
   display: block;
   text-align: center;
+`;
+
+const IMG = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
 `;

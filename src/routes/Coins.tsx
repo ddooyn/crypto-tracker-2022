@@ -35,8 +35,13 @@ export default function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
-                <IMG
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name },
+                }}
+              >
+                <Img
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                   alt={coin.symbol}
                 />
@@ -93,7 +98,7 @@ const Loader = styled.span`
   text-align: center;
 `;
 
-const IMG = styled.img`
+const Img = styled.img`
   width: 35px;
   height: 35px;
   margin-right: 10px;

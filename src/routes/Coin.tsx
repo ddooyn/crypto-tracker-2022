@@ -7,7 +7,6 @@ import {
   Link,
   useRouteMatch,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Chart from "./Chart";
 import Price from "./Price";
 import { useQuery } from "react-query";
@@ -91,23 +90,6 @@ export default function Coin() {
     () => fetchCoinTickers(coinId)
   );
   const loading = infoLoading || tickersLoading;
-  // consisLoading: infoLoadingt [loading, setLoading] = useState(true);
-  // const [info, setInfo] = useState<InfoData>();
-  // const [priceInfo, setPriceInfo] = useState<PriceData>();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const infoData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-  //     ).json();
-  //     const priceData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-  //     ).json();
-  //     setInfo(infoData);
-  //     setPriceInfo(priceData);
-  //     setLoading(false);
-  //   })();
-  // }, [coinId]);
 
   return (
     <Container>

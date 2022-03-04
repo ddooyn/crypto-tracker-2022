@@ -126,12 +126,19 @@ export default function Coin() {
             </OverviewItem>
           </Overview>
 
-          <Link to={`/${coinId}/chart`}>
-            Chart
-          </Link>
-          <Link to={`/${coinId}/price`}>
-            Price
-          </Link>
+
+          <Tabs>
+            <Tab>
+              <Link to={`/${coinId}/chart`}>
+                Chart
+              </Link>
+            </Tab>
+            <Tab>
+              <Link to={`/${coinId}/price`}>
+                Price
+              </Link>
+            </Tab>
+          </Tabs>
 
           <Switch>
             <Route path={`/:coinId/price`}>
@@ -192,4 +199,24 @@ const OverviewItem = styled.div`
 
 const Description = styled.p`
   margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 25px 0;
+`;
+
+const Tab = styled.span`
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  a {
+    display: block;
+    padding: 7px 0;
+  }
 `;

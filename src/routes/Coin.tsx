@@ -72,7 +72,7 @@ export default function Coin() {
   const { state } = useLocation<RouteState>();
   const [info, setInfo] = useState<InfoData>();
   const [priceInfo, setPriceInfo] = useState<PriceData>();
-  
+
   useEffect(() => {
     (async () => {
       const infoData = await (
@@ -85,14 +85,46 @@ export default function Coin() {
       setPriceInfo(priceData);
       setLoading(false);
     })();
-  }, []);
+  }, [coinId]);
 
   return (
     <Container>
       <Header>
-        <Title>{state?.name || "Loading.."}</Title>
+        <Title>
+          {state?.name ? state.name : loading ? "Loading.." : info?.name}
+        </Title>
       </Header>
-      {loading ? <Loader>Loading...</Loader> : priceInfo?.quotes.USD.ath_price}
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <>
+          <Overview>
+            <OverviewItem>
+              <span>Rank:</span>
+              <span>{info?.rank}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Symbol:</span>
+              <span>{info?.symbol}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Open Source:</span>
+              <span>{info?.open_source ? "Yes" : "No"}</span>
+            </OverviewItem>
+          </Overview>
+          <Description>{info?.description}</Description>
+          <Overview>
+            <OverviewItem>
+              <span>Total Supply:</span>
+              <span>{priceInfo?.total_supply}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Max Supply:</span>
+              <span>{priceInfo?.max_supply}</span>
+            </OverviewItem>
+          </Overview>
+        </>
+      )}
     </Container>
   );
 }
@@ -119,3 +151,9 @@ const Loader = styled.span`
   display: block;
   text-align: center;
 `;
+
+const Overview = styled.div``;
+
+const OverviewItem = styled.div``;
+
+const Description = styled.p``;

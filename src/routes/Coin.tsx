@@ -84,7 +84,8 @@ export default function Coin() {
   const priceMatch = useRouteMatch("/:coinId/price");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId), {
+    () => fetchCoinInfo(coinId),
+    {
       refetchInterval: 10000,
     }
   );
@@ -97,7 +98,9 @@ export default function Coin() {
   return (
     <Container>
       <Helmet>
-        <title>{state?.name ? state.name : loading ? "Loading.." : infoData?.name}</title>
+        <title>
+          {state?.name ? state.name : loading ? "Loading.." : infoData?.name}
+        </title>
       </Helmet>
       <Header>
         <Title>
@@ -119,7 +122,7 @@ export default function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>$ {tickersData?.quotes.USD.price.toFixed(6)}</span>
+              <span>$ {tickersData?.quotes.USD.price.toFixed(4)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -183,7 +186,7 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -214,13 +217,17 @@ const Tabs = styled.div`
 
 const Tab = styled.span<{ isActive: boolean }>`
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   font-size: 12px;
   font-weight: 400;
   text-align: center;
   text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: ${(props) => props.theme.cardBgHovColor};
+  }
   a {
     display: block;
     padding: 7px 0;

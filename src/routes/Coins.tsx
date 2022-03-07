@@ -69,15 +69,17 @@ const CoinList = styled.ul``;
 const Coin = styled.li`
   margin-bottom: 10px;
   border-radius: 15px;
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
+  transition: all 0.2s ease-in-out;
   a {
     display: flex;
     align-items: center;
     padding: 20px;
-    transition: color 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
   &:hover {
+    background-color: ${(props) => props.theme.cardBgHovColor};
     a {
       color: ${(props) => props.theme.accentColor};
     }

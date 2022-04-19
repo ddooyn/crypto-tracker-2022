@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import HelmetTitle from "../components/HelmetTitle";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
@@ -16,20 +16,16 @@ interface ICoin {
   type: string;
 }
 
-interface ICoinsProps {}
-
-export default function Coins({}: ICoinsProps) {
-  const setDarkAtom = useSetRecoilState(isDarkAtom)
-  const toggleDarkAtom = () => setDarkAtom(prev => !prev);
+export default function Coins() {
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
     <Container>
-      <Helmet>
-        <title>Coins</title>
-      </Helmet>
+      <HelmetTitle text={"Crypto Tracker"} />
       <Header>
-        <Title>Coins</Title>
+        <Title>Crypto Tracker</Title>
         <button onClick={toggleDarkAtom}>Toggle Mode</button>
       </Header>
       {isLoading ? (
@@ -38,12 +34,7 @@ export default function Coins({}: ICoinsProps) {
         <CoinList>
           {data?.slice(0, 50).map((coin) => (
             <Coin key={coin.id}>
-              <Link
-                to={{
-                  pathname: `/${coin.id}`,
-                  state: { name: coin.name },
-                }}
-              >
+              <Link to={`/${coin.id}`} state={coin.name}>
                 <Img
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                   alt={coin.symbol}

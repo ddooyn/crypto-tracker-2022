@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 import App from "./App";
@@ -10,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,

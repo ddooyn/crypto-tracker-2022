@@ -1,24 +1,20 @@
 import styled from "styled-components";
 import {
-  Switch,
-  Route,
   useLocation,
   useParams,
   Link,
-  useRouteMatch,
+  useMatch,
+  Outlet,
+  PathMatch,
 } from "react-router-dom";
-import Chart from "./Chart";
-import Price from "./Price";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 
-interface RouteParams {
-  coinId: string;
-}
-
 interface RouteState {
-  name: string;
+  state: {
+    name: string;
+  };
 }
 
 interface InfoData {
@@ -77,13 +73,11 @@ interface PriceData {
   };
 }
 
-interface ICoinProps {}
-
-export default function Coin({}: ICoinProps) {
-  const { coinId } = useParams<RouteParams>();
-  const { state } = useLocation<RouteState>();
-  const chartMatch = useRouteMatch("/:coinId/chart");
-  const priceMatch = useRouteMatch("/:coinId/price");
+export default function Coin() {
+  const { coinId } = useParams<string>();
+  const { state } = useLocation() as RouteState;
+  const chartMatch: PathMatch<"coinId"> | null = useMatch("/:coinId/chart");
+  const priceMatch: PathMatch<"coinId"> | null = useMatch("/:coinId/price");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId),
@@ -148,14 +142,7 @@ export default function Coin({}: ICoinProps) {
             </Tab>
           </Tabs>
 
-          <Switch>
-            <Route path={`/:coinId/price`}>
-              <Price />
-            </Route>
-            <Route path={`/:coinId/chart`}>
-              <Chart coinId={coinId} />
-            </Route>
-          </Switch>
+          <Outlet context={coinId} />
         </>
       )}
     </Container>

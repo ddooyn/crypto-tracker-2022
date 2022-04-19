@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { fetchCoinHistory } from "../api";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "../atoms";
+import { useOutletContext } from "react-router-dom";
 
 interface IHistorical {
   time_open: string;
@@ -19,7 +20,8 @@ interface IChartProps {
   coinId: string;
 }
 
-export default function Chart({ coinId }: IChartProps) {
+export default function Chart() {
+  const { coinId } = useOutletContext<IChartProps>();
   const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
